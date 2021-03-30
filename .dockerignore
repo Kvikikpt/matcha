@@ -1,0 +1,6 @@
+back/node_modules
+back/npm-debug.log
+README.md
+.gitignore
+.idea
+.git
