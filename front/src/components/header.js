@@ -1,6 +1,7 @@
 import React from "react";
 import {AppBar, Avatar, Container, makeStyles, Toolbar, Typography} from "@material-ui/core";
 import {useSelector} from "react-redux";
+import {Link} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     flex: {
@@ -25,12 +26,16 @@ export default function Header() {
                     Matcha
                 </Typography>
                 <div className={classes.flex}/>
-                <Typography variant="h6" color="inherit" noWrap className={classes.username}>
-                    {user}
-                </Typography>
-                <Avatar>
-                    {icon}
-                </Avatar>
+                {user !== null &&
+                    <div>
+                        <Typography variant="h6" color="inherit" noWrap className={classes.username}>
+                            {user}
+                        </Typography>
+                        <Avatar>
+                            {icon}
+                        </Avatar>
+                    </div>
+                }
             </Toolbar>
         </Container>
     </AppBar>

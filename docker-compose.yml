@@ -10,7 +10,7 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - addressbook-db:/var/lib/postgresql/data
+      - matcha-db:/var/lib/postgresql/data
 
   matcha:
     build:
@@ -26,4 +26,4 @@ services:
       - '3000:3000'
 
 volumes:
-  addressbook-db:
+  matcha-db:
