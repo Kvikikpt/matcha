@@ -57,18 +57,18 @@ export default function AuthPage() {
             lastName,
         }).then(res => {
             if (res) {
+                setErrMessages({
+                    username: '',
+                    email: '',
+                    password: '',
+                    repeatPassword: '',
+                    firstName: '',
+                    lastName: ''
+                });
                 if (!res.data) throw new Error("Invalid response");
                 if (!res.data.status && res.data.status !== 0) throw new Error("Invalid response");
                 if (res.data.status === 0) {
                     setLoading(false)
-                    setErrMessages({
-                        username: '',
-                        email: '',
-                        password: '',
-                        repeatPassword: '',
-                        firstName: '',
-                        lastName: ''
-                    });
                     if (!res.data.token) throw new Error("Lost token");
                     localStorage.token = res.data.token
                     history.push('/');
@@ -88,6 +88,14 @@ export default function AuthPage() {
             else throw new Error('Invalid response');
         }).catch(e => {
             setLoading(false)
+            setErrMessages({
+                username: '',
+                email: '',
+                password: '',
+                repeatPassword: '',
+                firstName: '',
+                lastName: ''
+            });
             console.log(e);
         })
     }

@@ -45,15 +45,15 @@ export default function AuthPage() {
             password
         }).then(res => {
             if (res) {
+                setErrMessages({
+                    login: '',
+                    password: '',
+                    message: ''
+                });
                 if (!res.data) throw new Error("Invalid response");
                 if (!res.data.status && res.data.status !== 0) throw new Error("Invalid response");
                 if (res.data.status === 0) {
                     setLoading(false)
-                    setErrMessages({
-                        login: '',
-                        password: '',
-                        message: ''
-                    });
                     if (!res.data.token) throw new Error("Lost token");
                     localStorage.token = res.data.token
                     history.push('/');
@@ -73,6 +73,11 @@ export default function AuthPage() {
             else throw new Error('Invalid response');
         }).catch(e => {
             setLoading(false)
+            setErrMessages({
+                login: '',
+                password: '',
+                message: ''
+            });
             console.log(e);
         })
     }
