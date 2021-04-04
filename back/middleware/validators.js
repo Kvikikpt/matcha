@@ -18,11 +18,18 @@ async function auth(req, res, next) {
     if (!password) errMessages.password = 'Please fill password field';
     if (login && password) {
         const hash_pass = md5(process.env.SAULT || 'somesalt' + password);
-        const user_data = db.query(`select id from public.user where password = '${hash_pass}'
-                                    and (username = '${login}' or email = '${login.toLowerCase()}')`);
-        if (user_data.rows && user_data.rows.length === 1) {
+        const user_data = await db.query(`select id from public.user where password = '${hash_pass}'
+                                    and (username = '${login}' or email = '${login.toLowerCase()}')`)
+            .catch(e => {
+                console.log(e);
+                errMessages.message = 'Something went wrong on Server';
+            });
+        if (!user_data) {
+            errMessages.message = 'Something went wrong on Server';
+        }
+        else if (user_data.rows && user_data.rows.length === 1) {
             req.id = user_data.rows[0].id
-            next()
+            return next();
         }
         else {
             errMessages.message = 'Login and pass does not match any user'

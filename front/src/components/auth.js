@@ -139,6 +139,11 @@ export default function AuthPage() {
                     :
                     <Button
                         onClick={() => {auth()}}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                auth();
+                            }
+                        }}
                         variant={"contained"}
                         type="submit"
                         fullWidth

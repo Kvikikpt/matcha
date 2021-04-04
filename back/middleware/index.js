@@ -17,7 +17,7 @@ function verifyToken(req, res, next) {
     const token = req.headers['x-access-token'];
     if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
 
-    jwt.verify(token, getKey(), function(err, decoded) {
+    jwt.verify(token, getKey(),  { algorithms: ['RS256']}, function(err, decoded) {
         if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
 
         req.user = decoded;

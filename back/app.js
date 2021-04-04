@@ -11,7 +11,7 @@ const authRouter = require('./routes/auth');
 const usersRouter = require('./routes/users');
 
 const corsOptions = {
-    origin: 'http://localhost:3001',
+    origin: 'http://localhost:8000',
 }
 
 const app = express();

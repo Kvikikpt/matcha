@@ -12,18 +12,18 @@ services:
     volumes:
       - matcha-db:/var/lib/postgresql/data
 
-  matcha:
-    build:
-      context: .
-    environment:
-      DB_SCHEMA: postgres
-      DB_USER: postgres
-      DB_PASSWORD: postgres
-      DB_HOST: postgres
-    depends_on:
-      - postgres
-    ports:
-      - '3000:3000'
+#  matcha:
+#    build:
+#      context: .
+#    environment:
+#      DB_SCHEMA: postgres
+#      DB_USER: postgres
+#      DB_PASSWORD: postgres
+#      DB_HOST: postgres
+#    depends_on:
+#      - postgres
+#    ports:
+#      - '3000:3000'
 
 volumes:
   matcha-db:
