@@ -2,6 +2,8 @@ import React from "react";
 import {Button, CircularProgress, Container, Fab, Grid, makeStyles, TextField, Typography} from "@material-ui/core";
 import {Link, useHistory} from 'react-router-dom';
 import axios from "axios";
+import {useDispatch} from "react-redux";
+import {setToken} from "../redux/actions/token";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -28,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 export default function AuthPage() {
     const classes = useStyles();
     const history = useHistory();
+    const dispatch = useDispatch();
 
     const [login, setLogin] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -56,6 +59,7 @@ export default function AuthPage() {
                     setLoading(false)
                     if (!res.data.token) throw new Error("Lost token");
                     localStorage.token = res.data.token
+                    dispatch(setToken(res.data.token));
                     history.push('/');
                 }
                 else if (res.data.status === 1) {
@@ -95,6 +99,11 @@ export default function AuthPage() {
                 }
                 <form className={classes.form} noValidate>
                     <TextField
+                        onKeyPress={(e) => {
+                            if (e.key === 'Enter') {
+                                auth();
+                            }
+                        }}
                         error={Boolean(errMessages.login)}
                         helperText={errMessages.login}
                         variant={"outlined"}
@@ -110,6 +119,11 @@ export default function AuthPage() {
                         autoFocus
                     />
                     <TextField
+                        onKeyPress={(e) => {
+                            if (e.key === 'Enter') {
+                                auth();
+                            }
+                        }}
                         error={Boolean(errMessages.password)}
                         helperText={errMessages.password}
                         variant={"outlined"}
@@ -139,11 +153,6 @@ export default function AuthPage() {
                     :
                     <Button
                         onClick={() => {auth()}}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                auth();
-                            }
-                        }}
                         variant={"contained"}
                         type="submit"
                         fullWidth

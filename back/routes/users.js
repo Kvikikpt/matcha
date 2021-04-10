@@ -6,7 +6,8 @@ const {db} = require('../db');
 /* GET users listing. */
 router.get('/get_user', middleware.verifyToken, async function (req, res, next) {
   if (!req.user.id) return res.json({status: 3, message: "Can't find user with given token"})
-  let user = await db.query(`select username, email from public.user where id = '${req.user.id}'`)
+  let user = await db.query(`
+  select username, email, is_admin, filled_info from public.user where id = '${req.user.id}'`)
       .catch(e => {
         console.log(e);
       });

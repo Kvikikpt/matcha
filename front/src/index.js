@@ -9,7 +9,8 @@ import mainReducer from './redux/index';
 
 const initial = {
     socket: null,
-    user: null
+    user: null,
+    token: '',
 }
 
 const store = createStore(

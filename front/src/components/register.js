@@ -2,6 +2,8 @@ import React from "react";
 import {Button, CircularProgress, Container, makeStyles, TextField, Typography} from "@material-ui/core";
 import axios from "axios";
 import {useHistory} from 'react-router-dom';
+import {setToken} from "../redux/actions/token";
+import {useDispatch} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -29,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 export default function AuthPage() {
     const classes = useStyles();
     const history = useHistory();
+    const dispatch = useDispatch();
 
     const [username, setUserName] = React.useState('');
     const [email, setEmail] = React.useState('');
@@ -70,7 +73,8 @@ export default function AuthPage() {
                 if (res.data.status === 0) {
                     setLoading(false)
                     if (!res.data.token) throw new Error("Lost token");
-                    localStorage.token = res.data.token
+                    localStorage.token = res.data.token;
+                    dispatch(setToken(res.data.token));
                     history.push('/');
                 }
                 else if (res.data.status === 1) {
@@ -121,6 +125,7 @@ export default function AuthPage() {
                         name="email"
                         autoComplete="email"
                         autoFocus
+                        inputProps={{ maxLength: 100 }}
                     />
                     <TextField
                         error={Boolean(errMessages.username)}
@@ -136,6 +141,7 @@ export default function AuthPage() {
                         name="username"
                         autoComplete="user_name"
                         autoFocus
+                        inputProps={{ maxLength: 20 }}
                     />
                     <TextField
                         error={Boolean(errMessages.firstName)}
@@ -151,6 +157,7 @@ export default function AuthPage() {
                         name="firstname"
                         autoComplete="firstname"
                         autoFocus
+                        inputProps={{ maxLength: 30 }}
                     />
                     <TextField
                         error={Boolean(errMessages.lastName)}
@@ -166,6 +173,7 @@ export default function AuthPage() {
                         name="lastname"
                         autoComplete="lastname"
                         autoFocus
+                        inputProps={{ maxLength: 30 }}
                     />
                     <TextField
                         error={Boolean(errMessages.password)}
@@ -182,6 +190,7 @@ export default function AuthPage() {
                         name="password"
                         autoComplete="password"
                         autoFocus
+                        inputProps={{ maxLength: 200 }}
                     />
                     <TextField
                         error={Boolean(errMessages.repeatPassword)}
@@ -198,6 +207,7 @@ export default function AuthPage() {
                         name="repeat_password"
                         autoComplete="repeat_password"
                         autoFocus
+                        inputProps={{ maxLength: 200 }}
                     />
                 </form>
                 {loading ?
